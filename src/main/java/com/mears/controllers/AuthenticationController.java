@@ -17,18 +17,19 @@ public class AuthenticationController{
     @RequestMapping(value = "/login", method = RequestMethod.PUT)
     public ResponseEntity<String> login(@PathVariable String driverNum, @PathVariable String password){
 
-        if (authenticationService.isDriverAuthenticated(driverNum, password) == true){
-            return new ResponseEntity<String>(driverNum  + "is authenticated!", HttpStatus.OK);
+        if (authenticationService.isDriverAuthenticated(driverNum, password)){
+            return new ResponseEntity<>(driverNum + "is authenticated!", HttpStatus.OK);
         }
-        else
-            return new ResponseEntity<String>(HttpStatus.FORBIDDEN);
+        else {
+            return new ResponseEntity<>(HttpStatus.FORBIDDEN);
+        }
     }
 
     @RequestMapping(value = "/{userName}")
     public ModelAndView getUser(@PathVariable("userName") String user){
 
         ModelAndView model = new ModelAndView("userName Page");
-        model.addObject("msg", "hi"+ user);
+        model.addObject("msg", "hi " + user);
         return model;
     }
 
