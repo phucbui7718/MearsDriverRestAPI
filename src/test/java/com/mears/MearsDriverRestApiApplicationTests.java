@@ -15,4 +15,78 @@ public class MearsDriverRestApiApplicationTests {
 	public void contextLoads() {
 	}
 
+	@Test
+	public void testGetDriveNum() throws Exception {
+
+	}
+
+	@Test
+	public void testSetDriverNum() throws Exception {
+
+	}
+
+	@Test
+	public void testGetDriverFirstName() throws Exception {
+
+	}
+
+	@Test
+	public void testSetFirstName() throws Exception {
+
+	}
+
+	@Test
+	public void testGetDriverLastName() throws Exception {
+
+	}
+
+	@Test
+	public void testSetLastName() throws Exception {
+
+	}
+
+	@Test
+	public void testGetDriverNameFirstLast() throws Exception {
+
+	}
+
+	@Test
+	public void testGetDriverNameLastFirst() throws Exception {
+
+	}
+
+	@Test
+	public void testGetHireDate() throws Exception {
+
+	}
+
+	@Test
+	public void testSetHireDate() throws Exception {
+
+	}
+
+	@Test
+	public void testGetPassword() throws Exception {
+
+	}
+
+	@Test
+	public void testSetPassword() throws Exception {
+
+	}
+
+	@Test
+	public void testGetSchedules() throws Exception {
+
+	}
+
+	@Test
+	public void testSetSchedules() throws Exception {
+
+	}
+
+	@Test
+	public void testToString() throws Exception {
+
+	}
 }
