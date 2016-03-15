@@ -1,12 +1,8 @@
 package com.mears.repositories;
 
-
+import com.mears.entities.Driver;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
-//import org.springframework.data.repository.Repository;
-import com.mears.entities.Driver;
-
-//import java.util.List;
 
 public interface DriverRepository extends MongoRepository<Driver, String> {
 
