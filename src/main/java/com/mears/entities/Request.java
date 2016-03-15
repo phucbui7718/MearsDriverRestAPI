@@ -8,7 +8,7 @@ import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection="driverRequests")
-@TypeAlias("requests")
+@TypeAlias("Request")
 public class Request {
 
     @Id

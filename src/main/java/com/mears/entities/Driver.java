@@ -99,8 +99,8 @@ public class Driver {
 
     public String toString() {
         return String.format(
-                "Driver[driverNum=%s, firstName='%s', lastName='%s']",
-                driverNum, firstName, lastName);
+                "Driver: %s %s  Number: %s",
+                firstName, lastName, driverNum);
     }
 
 }
