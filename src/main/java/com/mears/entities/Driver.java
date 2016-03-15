@@ -1,14 +1,12 @@
 package com.mears.entities;
 
 import org.springframework.data.annotation.Id;
-import java.util.Date;
-import java.util.List;
-
 import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
+import java.util.List;
 
 @Document(collection="drivers")
-@TypeAlias("driver")
+@TypeAlias("Driver")
 public class Driver {
 
     @Id
@@ -16,24 +14,30 @@ public class Driver {
     private String driverNum;
     private String firstName;
     private String lastName;
-    private Date hireDate;
+    private String hireDate;
     private String password;
     private List<Schedule> schedules;
-
 
     public Driver(){
 
     }
 
-    public Driver(String driverNum, String firstName, String lastName,
-                  Date hireDate, String password, List<Schedule> schedules ) {
+    public Driver (String driverNum, String firstName, String lastName,
+                  String hireDate, String password ) {
         this.setDriverNum(driverNum);
-        this.id = driverNum;
+        this.setId(driverNum);
         this.setFirstName(firstName);
         this.setLastName(lastName);
         this.setHireDate(hireDate);
         this.setPassword(password);
-        this.setSchedules(schedules);
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getDriveNum() {
@@ -68,11 +72,11 @@ public class Driver {
         return lastName + ", " + firstName;
     }
 
-    public Date getHireDate() {
+    public String getHireDate() {
         return hireDate;
     }
 
-    public void setHireDate(Date hireDate) {
+    public void setHireDate(String hireDate) {
         this.hireDate = hireDate;
     }
 
@@ -92,8 +96,11 @@ public class Driver {
         this.schedules = schedules;
     }
 
+
     public String toString() {
-        return getDriverNameFirstLast();
+        return String.format(
+                "Driver[driverNum=%s, firstName='%s', lastName='%s']",
+                driverNum, firstName, lastName);
     }
 
 }
