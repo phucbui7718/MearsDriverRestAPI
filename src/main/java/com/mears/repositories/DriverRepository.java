@@ -1,13 +1,15 @@
 package com.mears.repositories;
 
 
-import org.springframework.data.mongodb.repository.Query;
-import org.springframework.data.repository.Repository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 import com.mears.entities.Driver;
 
-public interface DriverRepository extends Repository<Driver, String>{
+import java.util.List;
 
-    @Query("{driverNum : ?0}")
-    Driver findByDriverNum(String driverNum);
+public interface DriverRepository extends MongoRepository<Driver, String> {
+
+    public Driver findByDriverNum(String driverNum);
+    public List<Driver>  findByLastName(String lastName);
+
 
 }

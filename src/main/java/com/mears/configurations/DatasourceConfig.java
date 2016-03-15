@@ -1,3 +1,4 @@
+/*
 package com.mears.configurations;
 
 import org.springframework.context.annotation.Bean;
@@ -44,3 +45,4 @@ public class DatasourceConfig extends AbstractMongoConfiguration {
         return new MongoTemplate(mongo(), getDatabaseName());
     }
 }
+*/

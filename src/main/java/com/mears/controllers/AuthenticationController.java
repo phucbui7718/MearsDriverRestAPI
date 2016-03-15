@@ -20,7 +20,7 @@ public class AuthenticationController{
     AuthenticationService authenticationService;
 
     @RequestMapping(value = "/authenticate/login", method = RequestMethod.PUT)
-    public ResponseEntity<String> login(@PathVariable String driverNum, @PathVariable String password){
+    public ResponseEntity<String> login(@RequestParam String driverNum, @RequestParam String password){
 
         if (authenticationService.isDriverAuthenticated(driverNum, password) == true){
             return new ResponseEntity<String>(driverNum  + "is authenticated!", HttpStatus.OK);
@@ -29,6 +29,7 @@ public class AuthenticationController{
             return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
     }
 
+    // This is used for testing purpose.
     @RequestMapping(value = "/authenticate/{username}/{password}")
    public ResponseEntity<String> getLoginReponse(@PathVariable("username") String username, @PathVariable("password") String password) throws URISyntaxException {
 

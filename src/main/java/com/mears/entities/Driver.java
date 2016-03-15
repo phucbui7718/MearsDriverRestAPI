@@ -1,14 +1,13 @@
 package com.mears.entities;
 
 import org.springframework.data.annotation.Id;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection="drivers")
-@TypeAlias("driver")
+//@Document(collection="drivers")
+//@TypeAlias("driver")
 public class Driver {
 
     @Id
@@ -16,7 +15,7 @@ public class Driver {
     private String driverNum;
     private String firstName;
     private String lastName;
-    private Date hireDate;
+    private String hireDate;
     private String password;
     private List<Schedule> schedules;
 
@@ -26,7 +25,7 @@ public class Driver {
     }
 
     public Driver(String driverNum, String firstName, String lastName,
-                  Date hireDate, String password, List<Schedule> schedules ) {
+                  String hireDate, String password, List<Schedule> schedules ) {
         this.setDriverNum(driverNum);
         this.id = driverNum;
         this.setFirstName(firstName);
@@ -68,11 +67,11 @@ public class Driver {
         return lastName + ", " + firstName;
     }
 
-    public Date getHireDate() {
+    public String getHireDate() {
         return hireDate;
     }
 
-    public void setHireDate(Date hireDate) {
+    public void setHireDate(String hireDate) {
         this.hireDate = hireDate;
     }
 
@@ -92,8 +91,16 @@ public class Driver {
         this.schedules = schedules;
     }
 
+    @Override
     public String toString() {
-        return getDriverNameFirstLast();
+        return "Driver{" +
+                "id='" + id + '\'' +
+                ", driverNum='" + driverNum + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", hireDate='" + hireDate + '\'' +
+                ", password='" + password + '\'' +
+                ", schedules=" + schedules +
+                '}';
     }
-
 }
