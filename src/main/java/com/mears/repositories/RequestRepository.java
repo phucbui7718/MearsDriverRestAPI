@@ -9,4 +9,5 @@ public interface RequestRepository extends Repository<Driver, String>{
 
     @Query("{driverNum : ?0}")
     Request findByDriverNum(String driverNum);
+
 }
