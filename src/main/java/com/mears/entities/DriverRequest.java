@@ -8,24 +8,23 @@ import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection="driverRequests")
-@TypeAlias("Request")
-public class Request {
+@TypeAlias("DriverRequest")
+public class DriverRequest {
 
     @Id
     private long id;
     private String driverNum;
-    private long requestTypeNum;
-
-    private Date requestDate;
+    private DriverRequestType requestType;
+    private String requestDate;
     private String reason;
 
-    public Request() {}
+    public DriverRequest() {}
 
-    public Request (long id, String driverNum, long requestTypeNum,
-                    Date requestDate, String reason) {
+    public DriverRequest(long id, String driverNum, DriverRequestType requestType,
+                         String requestDate, String reason) {
         this.setId(id);
         this.setDriverNum(driverNum);
-        this.setRequestTypeNum(requestTypeNum);
+        this.setRequestType(requestType);
         this.setRequestDate(requestDate);
         this.setReason(reason);
     }
@@ -46,19 +45,19 @@ public class Request {
         this.id = id;
     }
 
-    public void setRequestTypeNum(long requestTypeNum) {
-        this.requestTypeNum = requestTypeNum;
+    public void setRequestType(DriverRequestType requestType) {
+        this.requestType = requestType;
     }
 
-    public long getRequestTypeNum() {
-        return requestTypeNum;
+    public DriverRequestType getRequestTypeNum() {
+        return requestType;
     }
 
-    public Date getRequestDate() {
+    public String getRequestDate() {
         return requestDate;
     }
 
-    public void setRequestDate (Date requestDate) {
+    public void setRequestDate (String requestDate) {
         this.requestDate = requestDate;
     }
 
@@ -68,6 +67,11 @@ public class Request {
 
     public void setReason(String reason) {
         this.reason = reason;
+    }
+
+    public String toString() {
+        return String.format("DriverNum: %s \nDate: %s \nType: %s \nReason: %s",
+                driverNum, requestDate, requestType, reason);
     }
 
 }

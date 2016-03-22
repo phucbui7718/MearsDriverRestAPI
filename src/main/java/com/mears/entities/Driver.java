@@ -3,7 +3,6 @@ package com.mears.entities;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
-import java.util.List;
 
 @Document(collection="drivers")
 @TypeAlias("Driver")
@@ -16,7 +15,6 @@ public class Driver {
     private String lastName;
     private String hireDate;
     private String password;
-    private List<Schedule> schedules;
 
     public Driver(){
 
@@ -86,14 +84,6 @@ public class Driver {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public List<Schedule> getSchedules() {
-        return schedules;
-    }
-
-    public void setSchedules(List<Schedule> schedules) {
-        this.schedules = schedules;
     }
 
 

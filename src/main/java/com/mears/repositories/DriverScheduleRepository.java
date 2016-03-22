@@ -1,13 +1,12 @@
 package com.mears.repositories;
 
 import java.util.List;
-import com.mears.entities.Request;
+import com.mears.entities.DriverSchedule;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 
-public interface RequestRepository extends MongoRepository<Request, String>{
+public interface DriverScheduleRepository extends MongoRepository<DriverSchedule, String>{
 
     @Query("{driverNum : ?0}")
-    List<Request> findByDriverNum(String driverNum);
-
+    List<DriverSchedule> findByDriverNum(String driverNum);
 }

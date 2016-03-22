@@ -1,15 +1,19 @@
 package com.mears.entities;
 
+import org.springframework.core.env.SystemEnvironmentPropertySource;
 import org.springframework.data.annotation.Id;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
 
 import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection="driverSchedules")
-@TypeAlias("Schedule")
-public class Schedule {
+@TypeAlias("DriverSchedule")
+public class DriverSchedule {
 
     @Id
     private long id;
@@ -18,10 +22,10 @@ public class Schedule {
     private String startTime;
     private String endTime;
 
-    public Schedule() {}
+    public DriverSchedule() {}
 
-    public Schedule(long id, String driverNum, String scheduleDate,
-                    String startTime, String endTime) {
+    public DriverSchedule(long id, String driverNum, String scheduleDate,
+                          String startTime, String endTime) {
         this.setId(id);
         this.setDriverNum(driverNum);
         this.setScheduleDate(scheduleDate);
@@ -47,6 +51,17 @@ public class Schedule {
 
     public String getScheduleDate() {
         return scheduleDate;
+    }
+
+    public Date convertScheduleDate() {
+        try {
+            DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
+            Date newScheduleDate = df.parse(this.scheduleDate);
+            return newScheduleDate;
+        } catch (ParseException e) {
+            System.out.println("Invalid date format.");
+            return null;
+        }
     }
 
     public void setScheduleDate(String scheduleDate) {
