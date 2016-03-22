@@ -1,8 +1,8 @@
 package com.mears.entities;
 
+import com.mears.repositories.DriverRequestRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
-import java.util.Date;
-import java.util.List;
 
 import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -17,6 +17,8 @@ public class DriverRequest {
     private DriverRequestType requestType;
     private String requestDate;
     private String reason;
+    @Autowired
+    private DriverRequestRepository driverRequestRepository;
 
     public DriverRequest() {}
 
@@ -49,7 +51,7 @@ public class DriverRequest {
         this.requestType = requestType;
     }
 
-    public DriverRequestType getRequestTypeNum() {
+    public DriverRequestType getRequestType() {
         return requestType;
     }
 
@@ -71,7 +73,12 @@ public class DriverRequest {
 
     public String toString() {
         return String.format("DriverNum: %s \nDate: %s \nType: %s \nReason: %s",
-                driverNum, requestDate, requestType, reason);
+                driverNum, requestDate, requestType.getDescription(), reason);
+    }
+
+    public void submitDriverRequest() {
+        driverRequestRepository.save(new DriverRequest(this.getId(), this.getDriverNum(),
+                this.getRequestType(), this.getRequestDate(), this.getReason()));
     }
 
 }

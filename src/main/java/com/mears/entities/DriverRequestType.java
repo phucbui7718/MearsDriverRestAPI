@@ -4,52 +4,52 @@ package com.mears.entities;
 public enum DriverRequestType {
     DAYOFF(1) {
         @Override
-        public int id () {
+        public int getId() {
             return 1;
         }
 
         @Override
-        public String description () {
+        public String getDescription() {
             return "Day Off";
         }
 
         @Override
-        public int maxDays () {
+        public int getEarliestDayToSubmitRequest() {
             return 60;
         }
 
         @Override
-        public int minDays () {
+        public int getLatestDayToSubmitRequest() {
             return 0;
         }
     },
     WORK(2){
         @Override
-        public int id () {
+        public int getId() {
             return 2;
         }
 
         @Override
-        public String description () {
+        public String getDescription() {
             return "Work";
         }
 
         @Override
-        public int maxDays () {
+        public int getEarliestDayToSubmitRequest() {
             return 60;
         }
 
         @Override
-        public int minDays () {
+        public int getLatestDayToSubmitRequest() {
             return 7;
         }
     };
     private int value;
 
-    public abstract int id ();
-    public abstract String description ();
-    public abstract int maxDays ();
-    public abstract int minDays ();
+    public abstract int getId();
+    public abstract String getDescription();
+    public abstract int getEarliestDayToSubmitRequest();
+    public abstract int getLatestDayToSubmitRequest();
 
     private DriverRequestType(int n) {
         this.value = n;

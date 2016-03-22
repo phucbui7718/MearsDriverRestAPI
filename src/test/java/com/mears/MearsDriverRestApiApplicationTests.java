@@ -82,6 +82,11 @@ public class MearsDriverRestApiApplicationTests {
 	public void testFetchRequests() throws Exception {
 
 		List<DriverRequest> requests;
+		DriverRequestType testType;
+		testType = DriverRequestType.DAYOFF;
+		System.out.println("");
+		System.out.println("-----------------------------------------");
+		System.out.println(testType.getId());
 
 		//driverScheduleRepository.findByDriverNum("1234");
 //		driverRequestRepository.save(new DriverRequest(2, "1234", DriverRequestType.DAYOFF,
@@ -90,15 +95,15 @@ public class MearsDriverRestApiApplicationTests {
 //				"05/20/2016", "Raising the Titanic"));
 //		driverRequestRepository.save(new DriverRequest(4, "1234", DriverRequestType.DAYOFF,
 //				"04/15/2016", "Taxes"));
-		driverRequestRepository.save(new DriverRequest(5, "1236", DriverRequestType.WORK,
-				"04/28/2016", "Need extra $"));
+//		driverRequestRepository.save(new DriverRequest(5, "1236", DriverRequestType.WORK,
+//				"04/28/2016", "Need extra $"));
 
-		String driverNum = "1234";
+		String driverNum = "1235";
 
 		requests = driverRequestRepository.findByDriverNum(driverNum);
 
 		System.out.println("-----------------------------------------");
-		System.out.println("Driver Request for Driver number: " + driverNum);
+		System.out.println("Driver Requests");
 		System.out.println(driverRepository.findByDriverNum(driverNum).toString());
 		if (requests.size() > 0) {
 			for (int i = 0; i < requests.size(); i++) {
