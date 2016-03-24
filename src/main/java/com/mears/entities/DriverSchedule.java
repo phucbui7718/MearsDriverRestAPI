@@ -56,8 +56,8 @@ public class DriverSchedule {
     public Date convertScheduleDate() {
         try {
             DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
-            Date newScheduleDate = df.parse(this.scheduleDate);
-            return newScheduleDate;
+            String tempDate = this.scheduleDate.replaceAll("-", "/");
+            return df.parse(tempDate);
         } catch (ParseException e) {
             System.out.println("Invalid date format.");
             return null;
