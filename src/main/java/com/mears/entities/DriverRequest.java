@@ -24,6 +24,7 @@ public class DriverRequest {
     private DriverRequestType requestType;
     private String requestDate;
     private String reason;
+
     @Autowired
     private DriverRequestRepository driverRequestRepository;
     @Autowired

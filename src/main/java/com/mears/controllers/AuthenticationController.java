@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import com.mears.services.AuthenticationService;
 
 import java.net.URI;
-import java.net.URISyntaxException;
 
 
 @RestController
@@ -16,32 +15,15 @@ public class AuthenticationController{
     @Autowired
     AuthenticationService authenticationService;
 
-    @RequestMapping(value = "/authenticate/login", method = RequestMethod.PUT)
-    public ResponseEntity<String> login(@RequestParam String driverNum, @RequestParam String password){
+    @RequestMapping(value = "/authenticate/login/{driverNum}/{password}", method = RequestMethod.PUT)
+    public ResponseEntity<String> login(@PathVariable("driverNum") String driverNum, @PathVariable("password") String password){
 
-        if (authenticationService.isDriverAuthenticated(driverNum, password)){
-            return new ResponseEntity<String>(driverNum  + "is authenticated!", HttpStatus.OK);
+        if (authenticationService.isDriverAuthenticated(driverNum, password) == true){
+            return ResponseEntity.created(URI.create("localhost:8099/authenticate/login/"+driverNum+"/"+password)).body(driverNum + " is authorized.");
         }
         else
-            return new ResponseEntity<String>(HttpStatus.NOT_FOUND);
+            return new ResponseEntity<String>(HttpStatus.FORBIDDEN);
     }
 
-    // This is used for testing purpose.
-    @RequestMapping(value = "/authenticate/{username}/{password}")
-   public ResponseEntity<String> getLoginResponse(@PathVariable("username") String username, @PathVariable("password") String password) throws URISyntaxException {
-
-
-        URI location = null;
-
-        location = new URI("localhost:8080/authenticate"+username+"/"+password);
-
-        if (!username.equals("phucbui") || (!password.equals("group5"))){
-
-            return ResponseEntity.created(location).body(username + " is not authorized!");
-        }
-        else
-
-        return ResponseEntity.created(location).body(username + " is authorized!");
-    }
 
 }
