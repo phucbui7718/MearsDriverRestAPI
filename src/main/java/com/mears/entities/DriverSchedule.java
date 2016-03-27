@@ -31,6 +31,7 @@ public class DriverSchedule {
         this.setScheduleDate(scheduleDate);
         this.setStartTime(startTime);
         this.setEndTime(endTime);
+
     }
 
     public long getId(){

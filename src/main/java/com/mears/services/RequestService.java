@@ -19,10 +19,10 @@ public class RequestService {
 
     //Insert request.
 
-    public void insertRequest(Long id, String driverNum, DriverRequestType requestType, String requestDate, String reason){
+    public void insertRequest(DriverRequest driverRequest){
 
-        driverRequestRepository.save(new DriverRequest(id, driverNum, requestType, requestDate, reason));
-        logger.info("Driver Request with id " + id + " has been inserted!");
+        driverRequestRepository.save(driverRequest);
+
     }
 
 
