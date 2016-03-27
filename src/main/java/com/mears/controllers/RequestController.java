@@ -18,6 +18,6 @@ public class RequestController {
 
         requestService.insertRequest(driverRequest);
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(driverRequest.getId() + " is inserted!");
+        return ResponseEntity.status(HttpStatus.CREATED).body(driverRequest.getId() + " is insertedd!");
     }
 }
