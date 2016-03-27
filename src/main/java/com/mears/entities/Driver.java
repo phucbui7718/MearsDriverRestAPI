@@ -4,6 +4,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+
 @Document(collection="drivers")
 @TypeAlias("Driver")
 public class Driver {
@@ -85,7 +86,6 @@ public class Driver {
     public void setPassword(String password) {
         this.password = password;
     }
-
 
     public String toString() {
         return String.format(
