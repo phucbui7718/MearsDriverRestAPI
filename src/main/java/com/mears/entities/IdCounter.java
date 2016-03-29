@@ -1,6 +1,5 @@
 package com.mears.entities;
 
-import com.mears.repositories.IdCounterRepository;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -12,7 +11,6 @@ public class IdCounter {
     @Id
     private String id;
     private long sequenceValue;
-    private IdCounterRepository idCounterRepository;
 
     public IdCounter(String id, long sequenceValue ) {
         this.id = id;
@@ -24,11 +22,11 @@ public class IdCounter {
     }
 
     public long getNextSequenceValue(){
-        this.sequenceValue += 1;
+        this.setSequenceValue(this.sequenceValue += 1);
         return this.sequenceValue;
     }
 
-    public long peekNextSequenceValue(){
-        return this.sequenceValue + 1;
+    public String toString() {
+        return "_id: " + this.id + " / sequenceValue: " + this.sequenceValue;
     }
 }

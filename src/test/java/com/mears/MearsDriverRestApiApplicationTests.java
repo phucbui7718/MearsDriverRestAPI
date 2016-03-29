@@ -9,7 +9,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -30,13 +29,19 @@ public class MearsDriverRestApiApplicationTests {
 
 	@Test
 	public void testCounter() {
-		DriverRequest req = new DriverRequest(11, "1236", DriverRequestType.DAYOFF,
-				"04/15/2016", "Cruise");
-		String reqClass = req.getClass().toString().replace("class com.mears.entities.", "");
-		List<IdCounter> idCounter = idCounterRepository.findById(reqClass);
+		IdCounter idCounter = idCounterRepository.findById("DriverRequest");
 		System.out.println();
 		System.out.println("---------------------");
-		System.out.println("Next sequence value: " + idCounter.get(0).peekNextSequenceValue()); // req.getNextSequenceValue());
+		DriverRequest req = new DriverRequest(idCounter.getNextSequenceValue(), "1236", DriverRequestType.DAYOFF,
+				"04/15/2016", "Cruise");
+		try {
+			idCounterRepository.save(idCounter);
+			driverRequestRepository.save(req);
+			System.out.println("Request saved.");
+			System.out.println(req.toString());
+		} catch (Exception e) {
+			System.out.println("Request not saved.");
+		}
 		System.out.println("---------------------");
 
 	}
@@ -96,12 +101,19 @@ public class MearsDriverRestApiApplicationTests {
 					return o1.convertScheduleDate().compareTo(o2.convertScheduleDate());
 				}
 			});
+			for (DriverSchedule sch: driverSchedules) {
+				System.out.println("-----------------------------------------");
+				System.out.println(sch.toString());
+
+			}
+/*
 			for (int i = 0; i < driverSchedules.size(); i++) {
 				System.out.println("-----------------------------------------");
 //				schDate = driverSchedules.get(i).convertScheduleDate();
 				System.out.println(driverSchedules.get(i).toString());
 //				System.out.println("DriverSchedule date: " + dateFormat.format(schDate));
 			}
+*/
 		} else {
 			System.out.println("No schedules found for driver number " + driverNum);
 		}
@@ -129,7 +141,7 @@ public class MearsDriverRestApiApplicationTests {
 //		driverRequestRepository.save(new DriverRequest(5, "1236", DriverRequestType.WORK,
 //				"04/28/2016", "Need extra $"));
 
-		String driverNum = "1235";
+		String driverNum = "1234";
 
 		requests = driverRequestRepository.findByDriverNum(driverNum);
 
@@ -137,10 +149,16 @@ public class MearsDriverRestApiApplicationTests {
 		System.out.println("Driver Requests");
 		System.out.println(driverRepository.findByDriverNum(driverNum).toString());
 		if (requests.size() > 0) {
+			for (DriverRequest req : requests) {
+				System.out.println(req.toString());
+				System.out.println("--------------------------------------");
+			}
+/*
 			for (int i = 0; i < requests.size(); i++) {
 				System.out.println(requests.get(i).toString());
 				System.out.println("--------------------------------------");
 			}
+*/
 		} else {
 			System.out.println("No requests found for driver number " + driverNum);
 		}
@@ -157,10 +175,16 @@ public class MearsDriverRestApiApplicationTests {
 		System.out.println("Driver: " + driver.toString());
 
 		if (scheduleSize > 0) {
+			for (DriverSchedule sch : driverSchedule) {
+				System.out.println("--------------------------------------");
+				System.out.println(sch.toString());
+			}
+/*
 			for (int i = 0; i < scheduleSize; i++) {
 				System.out.println("--------------------------------------");
 				System.out.println(driverSchedule.get(i).toString());
 			}
+*/
 		}
 		System.out.println("--------------------------------------");
 
