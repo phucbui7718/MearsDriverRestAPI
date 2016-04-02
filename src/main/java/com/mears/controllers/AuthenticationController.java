@@ -19,7 +19,7 @@ public class AuthenticationController{
     public ResponseEntity<String> login(@PathVariable("driverNum") String driverNum, @PathVariable("password") String password){
 
 
-        if (authenticationService.isDriverAuthenticated(driverNum, password) == true){
+        if (authenticationService.isDriverAuthenticated(driverNum, password)){
             return ResponseEntity.created(URI.create("localhost:8099/authenticate/login/"+driverNum+"/"+password)).body(driverNum + " is authorized.");
         }
         else

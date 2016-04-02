@@ -54,7 +54,7 @@ public class DriverSchedule {
         return scheduleDate;
     }
 
-    public Date convertScheduleDate() {
+    public Date toDate() {
         try {
             DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
             String tempDate = this.scheduleDate.replaceAll("-", "/");

@@ -98,7 +98,7 @@ public class MearsDriverRestApiApplicationTests {
 			Collections.sort(driverSchedules, new Comparator<DriverSchedule>() {
 				@Override
 				public int compare(DriverSchedule o1, DriverSchedule o2) {
-					return o1.convertScheduleDate().compareTo(o2.convertScheduleDate());
+					return o1.toDate().compareTo(o2.toDate());
 				}
 			});
 			for (DriverSchedule sch: driverSchedules) {
@@ -109,7 +109,7 @@ public class MearsDriverRestApiApplicationTests {
 /*
 			for (int i = 0; i < driverSchedules.size(); i++) {
 				System.out.println("-----------------------------------------");
-//				schDate = driverSchedules.get(i).convertScheduleDate();
+//				schDate = driverSchedules.get(i).toDate();
 				System.out.println(driverSchedules.get(i).toString());
 //				System.out.println("DriverSchedule date: " + dateFormat.format(schDate));
 			}
@@ -130,16 +130,6 @@ public class MearsDriverRestApiApplicationTests {
 		System.out.println("");
 		System.out.println("-----------------------------------------");
 		System.out.println(testType.getId());
-
-		//driverScheduleRepository.findByDriverNum("1234");
-//		driverRequestRepository.save(new DriverRequest(2, "1234", DriverRequestType.DAYOFF,
-//				"04/28/2016", "Spy stuff"));
-//		driverRequestRepository.save(new DriverRequest(3, "1235", DriverRequestType.WORK,
-//				"05/20/2016", "Raising the Titanic"));
-//		driverRequestRepository.save(new DriverRequest(4, "1234", DriverRequestType.DAYOFF,
-//				"04/15/2016", "Taxes"));
-//		driverRequestRepository.save(new DriverRequest(5, "1236", DriverRequestType.WORK,
-//				"04/28/2016", "Need extra $"));
 
 		String driverNum = "1234";
 
