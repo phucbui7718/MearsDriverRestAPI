@@ -1,11 +1,8 @@
 package com.mears.entities;
 
-import com.mears.repositories.DriverRequestRepository;
-import com.mears.repositories.IdCounterRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.annotation.Id;
 
-import org.springframework.data.annotation.TypeAlias;
+//import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.text.DateFormat;
@@ -14,7 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Document(collection="driverRequests")
-@TypeAlias("DriverRequest")
+//@TypeAlias("DriverRequest")
 public class DriverRequest {
 
     @Id
@@ -23,11 +20,6 @@ public class DriverRequest {
     private DriverRequestType requestType;
     private String requestDate;
     private String reason;
-
-    @Autowired
-    private DriverRequestRepository driverRequestRepository;
-    @Autowired
-    private IdCounterRepository idCounterRepository;
 
     public DriverRequest(long id, String driverNum, DriverRequestType requestType,
                          String requestDate, String reason) {

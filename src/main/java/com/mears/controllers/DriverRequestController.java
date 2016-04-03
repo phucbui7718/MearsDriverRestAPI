@@ -21,18 +21,13 @@ public class DriverRequestController {
                 driverRequest.getId() + " has been submitted!");
     }
 
-    @RequestMapping(value = "/get/requests", method = RequestMethod.GET)
-    public ResponseEntity<List<DriverRequest>> getDriverRequests(@RequestBody String driverNum){
+    @RequestMapping(value = "/get/requests/{driverNum}", method = RequestMethod.GET)
+    public ResponseEntity<List<DriverRequest>> getDriverRequests(@PathVariable("driverNum") String driverNum){
         List<DriverRequest> driverRequests = driverRequestService.getDriverRequests(driverNum);
-/*
-        String responseMessage;
-        if (driverRequests.size() == 1) {
-            responseMessage = driverRequests.size() + " request has been found";
+        if (driverRequests.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(driverRequests);
         } else {
-            responseMessage = driverRequests.size() + " requests have been found";
+            return ResponseEntity.status(HttpStatus.FOUND).body(driverRequests);
         }
-        return ResponseEntity.status(HttpStatus.FOUND).body(responseMessage);
-*/
-        return ResponseEntity.status(HttpStatus.FOUND).body(driverRequests);
     }
 }

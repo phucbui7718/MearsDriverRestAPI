@@ -2,11 +2,14 @@ package com.mears.services;
 
 
 import com.mears.entities.DriverRequest;
+import com.mears.entities.IdCounter;
 import com.mears.repositories.DriverRequestRepository;
+import com.mears.repositories.IdCounterRepository;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.text.ParseException;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -18,11 +21,21 @@ public class DriverRequestService {
 
     @Autowired
     DriverRequestRepository driverRequestRepository;
+    @Autowired
+    private IdCounterRepository idCounterRepository;
 
     //Insert request
     public void insertRequest(DriverRequest driverRequest){
-
-        driverRequestRepository.save(driverRequest);
+        IdCounter idCounter = idCounterRepository.findById("DriverRequest");
+        driverRequest.setId(idCounter.getNextSequenceValue());
+        String message;
+        try {
+            if (driverRequest.getRequestType().isWithinDateBounds(driverRequest.getRequestDate())){
+                driverRequestRepository.save(driverRequest);
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
     }
 
