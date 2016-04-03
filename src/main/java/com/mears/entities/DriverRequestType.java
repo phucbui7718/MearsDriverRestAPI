@@ -1,8 +1,6 @@
 package com.mears.entities;
 
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -20,13 +18,13 @@ public enum DriverRequestType {
         }
 
         @Override
-        public long getEarliestDayToSubmitRequest() {
+        public int getEarliestDayToSubmitRequest() {
 
             return 60;
         }
 
         @Override
-        public long getLatestDayToSubmitRequest() {
+        public int getLatestDayToSubmitRequest() {
             return 0;
         }
     },
@@ -42,12 +40,12 @@ public enum DriverRequestType {
         }
 
         @Override
-        public long getEarliestDayToSubmitRequest() {
+        public int getEarliestDayToSubmitRequest() {
             return 60;
         }
 
         @Override
-        public long getLatestDayToSubmitRequest() {
+        public int getLatestDayToSubmitRequest() {
             return 7;
         }
     };
@@ -55,30 +53,39 @@ public enum DriverRequestType {
 
     public abstract int getId();
     public abstract String getDescription();
-    public abstract long getEarliestDayToSubmitRequest();
-    public abstract long getLatestDayToSubmitRequest();
+    public abstract int getEarliestDayToSubmitRequest();
+    public abstract int getLatestDayToSubmitRequest();
 
     private DriverRequestType(int n) {
         this.value = n;
     }
 
-    public boolean isWithinDateBounds (String reqDateString) throws ParseException {
-        SimpleDateFormat sd = new SimpleDateFormat("MM/dd/yyyy");
-        Date reqDate = sd.parse(reqDateString.replaceAll("-", "/"));
+    public Date getLatestDateToSubmitRequest(Date requestDate) {
         Calendar cal = Calendar.getInstance();
-        cal.setTime(reqDate);
+        cal.setTime(requestDate);
         int year = cal.get(Calendar.YEAR);
         int month = cal.get(Calendar.MONTH);
-        int day = cal.get(Calendar.DAY_OF_MONTH);
-        Date newReqDate = new GregorianCalendar(year, month, day).getTime();
-        /** Today's date */
-        Date today = new Date();
+        int day = cal.get(Calendar.DAY_OF_MONTH) - this.getLatestDayToSubmitRequest();
+        Date latestDate = new GregorianCalendar(year, month, day).getTime();
+        return latestDate;
+    }
 
-        /** Get msec from each, and subtract. */
-        long diff = newReqDate.getTime() - today.getTime();
-        diff = (diff / (1000 * 60 * 60 * 24));
-        if (diff >= this.getLatestDayToSubmitRequest() &&
-                diff <= this.getEarliestDayToSubmitRequest()) {
+    public Date getEarliestDateToSubmitRequest(Date requestDate) {
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(requestDate);
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH);
+        int day = cal.get(Calendar.DAY_OF_MONTH) - this.getEarliestDayToSubmitRequest();
+        Date earliestDate = new GregorianCalendar(year, month, day).getTime();
+        return earliestDate;
+    }
+
+    public boolean isWithinDateBounds(Date requestDate) {
+        Date today = new Date();
+        Date latestDate = this.getLatestDateToSubmitRequest(requestDate);
+        Date earliestDate = this.getEarliestDateToSubmitRequest(requestDate);
+        if (today.getTime() <= latestDate.getTime() &&
+                today.getTime() >= earliestDate.getTime()) {
             return true;
         } else {
             return false;

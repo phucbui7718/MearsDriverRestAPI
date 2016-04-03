@@ -2,6 +2,7 @@ package com.mears;
 
 import com.mears.entities.*;
 import com.mears.repositories.*;
+import com.mears.services.DriverRequestService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,6 @@ import java.util.*;
 @WebAppConfiguration
 public class MearsDriverRestApiApplicationTests {
 
-	@SuppressWarnings("SpringJavaAutowiringInspection")
 	@Autowired
 	public DriverRepository driverRepository;
 	@Autowired
@@ -29,12 +29,30 @@ public class MearsDriverRestApiApplicationTests {
 	@Autowired
 	private IdCounterRepository idCounterRepository;
 
+
+	@Test
+	public void testDriverRequestService() {
+		DriverRequest driverRequest = new DriverRequest("1236", DriverRequestType.DAYOFF,
+				"06-01-2016", "Daughter's birthday");
+		DriverRequestService driverRequestService = new DriverRequestService();
+		String message = driverRequestService.insertRequest(driverRequest);
+		System.out.println();
+		System.out.println("---------------------");
+		System.out.println(message);
+		System.out.println("---------------------");
+	}
+
 	@Test
 	public void testCounter() {
 		IdCounter idCounter = idCounterRepository.findById("DriverRequest");
 		System.out.println();
 		System.out.println("---------------------");
-		DriverRequest req = new DriverRequest(idCounter.getNextSequenceValue(), "1236", DriverRequestType.DAYOFF,
+		System.out.println(idCounter);
+		idCounter.getNextSequenceValue();
+		System.out.println(idCounter);
+		/*
+		DriverRequest req = new DriverRequest(idCounter.getNextSequenceValue(),
+				"1236", DriverRequestType.DAYOFF,
 				"04/15/2016", "Cruise");
 		try {
 			idCounterRepository.save(idCounter);
@@ -44,6 +62,7 @@ public class MearsDriverRestApiApplicationTests {
 		} catch (Exception e) {
 			System.out.println("Request not saved.");
 		}
+		*/
 		System.out.println("---------------------");
 
 	}
@@ -110,27 +129,48 @@ public class MearsDriverRestApiApplicationTests {
 	@Test
 	public void testFetchRequests() throws Exception {
 
-		List<DriverRequest> requests;
+		List<DriverRequest> driverRequests;
 		DriverRequestType testType;
-		testType = DriverRequestType.DAYOFF;
+		SimpleDateFormat sd = new SimpleDateFormat("MM/dd/yyyy");
+		Calendar cal = Calendar.getInstance();
+		String dateString = "";
 		System.out.println("");
-		System.out.println("-----------------------------------------");
-		System.out.println(testType.getId());
 
-		String driverNum = "1234";
+		String driverNum = "1235";
 
-		requests = driverRequestRepository.findByDriverNum(driverNum);
+		driverRequests = driverRequestRepository.findByDriverNum(driverNum);
+		Collections.sort(driverRequests, new Comparator<DriverRequest>() {
+			@Override
+			public int compare(DriverRequest o1, DriverRequest o2) {
+				return o1.getRequestDate().compareTo(o2.getRequestDate());
+			}
+		});
 
 		System.out.println("-----------------------------------------");
 		System.out.println("Driver Requests");
 		System.out.println(driverRepository.findByDriverNum(driverNum).toString());
-		if (requests.size() > 0) {
-			for (DriverRequest req : requests) {
+		if (driverRequests.size() > 0) {
+			for (DriverRequest req : driverRequests) {
 				System.out.println(req.toString());
+				Date reqDate = req.getRequestDate();
+
+				Date boundDate = req.getRequestType().getLatestDateToSubmitRequest(reqDate);
+				cal.setTime(boundDate);
+				dateString = (cal.get(Calendar.MONTH) + 1) + "/" +
+						cal.get(Calendar.DAY_OF_MONTH) + "/" + cal.get(Calendar.YEAR);
+				System.out.println("Latest date to submit: " + dateString);
+
+				boundDate = req.getRequestType().getEarliestDateToSubmitRequest(reqDate);
+				cal.setTime(boundDate);
+				dateString = (cal.get(Calendar.MONTH) + 1) + "/" +
+						cal.get(Calendar.DAY_OF_MONTH) + "/" + cal.get(Calendar.YEAR);
+				System.out.println("Earliest date to submit: " + dateString);
+
+				System.out.println("Is within date bounds: " + req.getRequestType().isWithinDateBounds(reqDate));
 				System.out.println("--------------------------------------");
 			}
 		} else {
-			System.out.println("No requests found for driver number " + driverNum);
+			System.out.println("No driverRequests found for driver number " + driverNum);
 		}
 		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 	}
