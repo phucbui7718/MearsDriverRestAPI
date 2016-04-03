@@ -12,17 +12,18 @@ import java.util.List;
 
 @RestController
 public class DriverScheduleController {
+
     @Autowired
     DriverScheduleService driverScheduleService;
 
-    @RequestMapping(value = "/get/schedules/{driverNum}", method = RequestMethod.GET)
-    public ResponseEntity<List<DriverSchedule>> getDriverSchedules(@PathVariable("driverNum") String driverNum){
+    @RequestMapping(value = "/get/schedule/{driverNum}", method = RequestMethod.GET)
+    public ResponseEntity<String> getDriverSchedules(@PathVariable String driverNum){
         List<DriverSchedule> driverSchedules = driverScheduleService.getDriverSchedules(driverNum);
-        if (driverSchedules.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(driverSchedules);
-        } else {
-            return ResponseEntity.status(HttpStatus.FOUND).body(driverSchedules);
+
+        if (driverSchedules.isEmpty()){
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No Schedule found for this driver!");
         }
+        return ResponseEntity.status(HttpStatus.FOUND).body(driverSchedules.toString());
     }
 
 }

@@ -22,12 +22,12 @@ public class DriverRequestController {
     }
 
     @RequestMapping(value = "/get/requests/{driverNum}", method = RequestMethod.GET)
-    public ResponseEntity<List<DriverRequest>> getDriverRequests(@PathVariable("driverNum") String driverNum){
+    public ResponseEntity<String> getDriverRequests(@PathVariable("driverNum") String driverNum){
         List<DriverRequest> driverRequests = driverRequestService.getDriverRequests(driverNum);
         if (driverRequests.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(driverRequests);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Driver not existed or no requests found!");
         } else {
-            return ResponseEntity.status(HttpStatus.FOUND).body(driverRequests);
+            return ResponseEntity.status(HttpStatus.FOUND).body(driverRequests.toString());
         }
     }
 }

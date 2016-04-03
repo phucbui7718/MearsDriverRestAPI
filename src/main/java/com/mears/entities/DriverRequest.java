@@ -30,6 +30,8 @@ public class DriverRequest {
         this.setReason(reason);
     }
 
+    public DriverRequest(){};
+
     public String getDriverNum() {
         return driverNum;
     }
