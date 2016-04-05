@@ -2,7 +2,7 @@ package com.mears.entities;
 
 import org.springframework.data.annotation.Id;
 
-//import org.springframework.data.annotation.TypeAlias;
+import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.text.DateFormat;
@@ -11,7 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Document(collection="driverRequests")
-//@TypeAlias("DriverRequest")
+@TypeAlias("DriverRequest")
 public class DriverRequest {
 
     @Id
@@ -30,7 +30,14 @@ public class DriverRequest {
         this.setReason(reason);
     }
 
-    public DriverRequest(){};
+    public DriverRequest(String driverNum, DriverRequestType requestType,
+                         String requestDate, String reason) {
+        this.setId(0);
+        this.setDriverNum(driverNum);
+        this.setRequestType(requestType);
+        this.setRequestDate(requestDate);
+        this.setReason(reason);
+    }
 
     public String getDriverNum() {
         return driverNum;
@@ -56,11 +63,15 @@ public class DriverRequest {
         return requestType;
     }
 
-    public String getRequestDate() {
+    public String getRequestDateString() {
         return requestDate;
     }
 
-    public Date toDate() {
+    public String getFormattedRequestDateString() {
+        return requestDate.replace("-", "/");
+    }
+
+    public Date getRequestDate() {
         try {
             DateFormat df = new SimpleDateFormat("MM/dd/yyyy");
             String tempDate = this.requestDate.replaceAll("-", "/");
@@ -72,7 +83,7 @@ public class DriverRequest {
     }
 
     public void setRequestDate (String requestDate) {
-        this.requestDate = requestDate;
+        this.requestDate = requestDate.replace("/", "-");
     }
 
     public String getReason() {
@@ -85,7 +96,8 @@ public class DriverRequest {
 
     public String toString() {
         return String.format("DriverNum: %s \nDate: %s \nType: %s \nReason: %s",
-                driverNum, requestDate, requestType.getDescription(), reason);
+                this.getDriverNum(), this.getFormattedRequestDateString(),
+                this.getRequestType().getDescription(), this.getReason());
     }
 
 }
