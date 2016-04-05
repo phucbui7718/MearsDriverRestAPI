@@ -21,7 +21,7 @@ public class DriverScheduleController {
         List<DriverSchedule> driverSchedules = driverScheduleService.getDriverSchedules(driverNum);
 
         if (driverSchedules.isEmpty()){
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No Schedule found for this driver!");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("No schedule found for this driver.");
         }
         return ResponseEntity.status(HttpStatus.FOUND).body(driverSchedules.toString());
     }

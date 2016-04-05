@@ -25,7 +25,7 @@ public class DriverRequestController {
     public ResponseEntity<String> getDriverRequests(@PathVariable("driverNum") String driverNum){
         List<DriverRequest> driverRequests = driverRequestService.getDriverRequests(driverNum);
         if (driverRequests.isEmpty()) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Driver not existed or no requests found!");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Driver does not exist or no requests found.");
         } else {
             return ResponseEntity.status(HttpStatus.FOUND).body(driverRequests.toString());
         }
