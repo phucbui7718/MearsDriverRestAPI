@@ -48,6 +48,7 @@ public class DriverRequestService {
             }
         } catch (ParseException e) {
             insertMessage = "Unable to submit request.";
+            logger.info(insertMessage);
         }
         return insertMessage;
     }

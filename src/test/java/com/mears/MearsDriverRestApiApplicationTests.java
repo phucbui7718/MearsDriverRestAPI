@@ -36,6 +36,7 @@ public class MearsDriverRestApiApplicationTests {
 				"06-01-2016", "Daughter's birthday");
 		DriverRequestService driverRequestService = new DriverRequestService();
 		String message = driverRequestService.insertRequest(driverRequest);
+		//Errors out here because IdCounter is null
 		System.out.println();
 		System.out.println("---------------------");
 		System.out.println(message);

@@ -18,7 +18,7 @@ public class DriverScheduleService {
     @Autowired
     DriverScheduleRepository driverScheduleRepository;
 
-    //Get schedule
+    //Get driver schedule by driverNum
     public List<DriverSchedule> getDriverSchedules (String driverNum) {
         List<DriverSchedule> driverSchedules;
         driverSchedules = driverScheduleRepository.findByDriverNum(driverNum);

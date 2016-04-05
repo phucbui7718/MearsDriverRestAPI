@@ -28,8 +28,8 @@ public class AuthenticationService {
         }
 
         else
-            logger.info(driverNum + " is not a valid driver number!");
-            logger.info(driverNum + driver.getPassword() + password + "not existed");
+            logger.info("Driver number " + driverNum + " does not exist.");
+            logger.info("Driver number: " + driverNum + "/Password: " + password + " does not exist.");
             return false;
     }
 
