@@ -27,45 +27,18 @@ public class MearsDriverRestApiApplicationTests {
 	@Autowired
 	private DriverRequestRepository driverRequestRepository;
 	@Autowired
-	private IdCounterRepository idCounterRepository;
+	DriverRequestService driverRequestService;
 
 
 	@Test
 	public void testDriverRequestService() {
-		DriverRequest driverRequest = new DriverRequest("1236", DriverRequestType.DAYOFF,
-				"06-01-2016", "Daughter's birthday");
-		DriverRequestService driverRequestService = new DriverRequestService();
+		DriverRequest driverRequest = new DriverRequest("1234", DriverRequestType.WORK,
+				"06-01-2016", "Vac money");
 		String message = driverRequestService.insertRequest(driverRequest);
-		//Errors out here because IdCounter is null
 		System.out.println();
 		System.out.println("---------------------");
 		System.out.println(message);
 		System.out.println("---------------------");
-	}
-
-	@Test
-	public void testCounter() {
-		IdCounter idCounter = idCounterRepository.findById("DriverRequest");
-		System.out.println();
-		System.out.println("---------------------");
-		System.out.println(idCounter);
-		idCounter.getNextSequenceValue();
-		System.out.println(idCounter);
-		/*
-		DriverRequest req = new DriverRequest(idCounter.getNextSequenceValue(),
-				"1236", DriverRequestType.DAYOFF,
-				"04/15/2016", "Cruise");
-		try {
-			idCounterRepository.save(idCounter);
-			driverRequestRepository.save(req);
-			System.out.println("Request saved.");
-			System.out.println(req.toString());
-		} catch (Exception e) {
-			System.out.println("Request not saved.");
-		}
-		*/
-		System.out.println("---------------------");
-
 	}
 
 	@Test
@@ -132,7 +105,7 @@ public class MearsDriverRestApiApplicationTests {
 
 		List<DriverRequest> driverRequests;
 		DriverRequestType testType;
-		SimpleDateFormat sd = new SimpleDateFormat("MM/dd/yyyy");
+		SimpleDateFormat df= new SimpleDateFormat("MM/dd/yyyy");
 		Calendar cal = Calendar.getInstance();
 		String dateString = "";
 		System.out.println("");

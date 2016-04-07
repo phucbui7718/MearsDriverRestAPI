@@ -14,13 +14,14 @@ import java.util.Date;
 @TypeAlias("DriverRequest")
 public class DriverRequest {
 
-    @Id
-    private long id;
+//    @Id
+//    private long id;
     private String driverNum;
     private DriverRequestType requestType;
     private String requestDate;
     private String reason;
 
+/*
     public DriverRequest(long id, String driverNum, DriverRequestType requestType,
                          String requestDate, String reason) {
         this.setId(id);
@@ -29,10 +30,11 @@ public class DriverRequest {
         this.setRequestDate(requestDate);
         this.setReason(reason);
     }
+*/
 
     public DriverRequest(String driverNum, DriverRequestType requestType,
                          String requestDate, String reason) {
-        this.setId(0);
+//        this.setId(0);
         this.setDriverNum(driverNum);
         this.setRequestType(requestType);
         this.setRequestDate(requestDate);
@@ -47,6 +49,7 @@ public class DriverRequest {
         this.driverNum = driverNum;
     }
 
+/*
     public long getId() {
         return id;
     }
@@ -54,6 +57,7 @@ public class DriverRequest {
     public void setId(long id) {
         this.id = id;
     }
+*/
 
     public void setRequestType(DriverRequestType requestType) {
         this.requestType = requestType;
@@ -91,7 +95,7 @@ public class DriverRequest {
     }
 
     public void setReason(String reason) {
-        this.reason = reason;
+        this.reason = reason.replaceAll("'", "");
     }
 
     public String toString() {

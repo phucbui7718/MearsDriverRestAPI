@@ -2,9 +2,7 @@ package com.mears.services;
 
 
 import com.mears.entities.DriverRequest;
-import com.mears.entities.IdCounter;
 import com.mears.repositories.DriverRequestRepository;
-import com.mears.repositories.IdCounterRepository;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -23,31 +21,25 @@ public class DriverRequestService {
 
     @Autowired
     private DriverRequestRepository driverRequestRepository;
-    @Autowired
-    private IdCounterRepository idCounterRepository;
 
     //Insert request
-    public String insertRequest(DriverRequest driverRequest){
-        IdCounter idCounter = idCounterRepository.findById("DriverRequest");
-        driverRequest.setId(idCounter.getNextSequenceValue());
-        SimpleDateFormat sd = new SimpleDateFormat("MM/dd/yyyy");
+    public String insertRequest(DriverRequest driverRequest) {
+        SimpleDateFormat df= new SimpleDateFormat("MM/dd/yyyy");
         String insertMessage;
         try {
-            Date reqDate = sd.parse(driverRequest.getRequestDateString().replaceAll("-", "/"));
+            Date reqDate = df.parse(driverRequest.getRequestDateString().replaceAll("-", "/"));
             Date earliestDate = driverRequest.getRequestType().getEarliestDateToSubmitRequest(reqDate);
-            earliestDate = sd.parse(earliestDate.toString());
             Date latestDate = driverRequest.getRequestType().getLatestDateToSubmitRequest(reqDate);
-            latestDate = sd.parse(latestDate.toString());
+
             if (driverRequest.getRequestType().isWithinDateBounds(reqDate)) {
-                idCounterRepository.save(idCounter);
-                driverRequestRepository.save(driverRequest);
+                driverRequestRepository.insert(driverRequest);
                 insertMessage = "Request submitted successfully.";
             } else {
                 insertMessage = "Date of request must be between " + latestDate +
                         " and " + earliestDate + ".";
             }
         } catch (ParseException e) {
-            insertMessage = "Unable to submit request.";
+            insertMessage = "Unable to submit request / " + e.getMessage();
             logger.info(insertMessage);
         }
         return insertMessage;
@@ -65,6 +57,4 @@ public class DriverRequestService {
         });
         return driverRequests;
     }
-
-
 }

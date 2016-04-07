@@ -1,6 +1,9 @@
 package com.mears.entities;
 
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -67,6 +70,7 @@ public enum DriverRequestType {
         int month = cal.get(Calendar.MONTH);
         int day = cal.get(Calendar.DAY_OF_MONTH) - this.getLatestDayToSubmitRequest();
         Date latestDate = new GregorianCalendar(year, month, day).getTime();
+        cal.setTime(latestDate);
         return latestDate;
     }
 
@@ -77,17 +81,22 @@ public enum DriverRequestType {
         int month = cal.get(Calendar.MONTH);
         int day = cal.get(Calendar.DAY_OF_MONTH) - this.getEarliestDayToSubmitRequest();
         Date earliestDate = new GregorianCalendar(year, month, day).getTime();
+        cal.setTime(earliestDate);
         return earliestDate;
     }
 
     public boolean isWithinDateBounds(Date requestDate) {
-        Date today = new Date();
-        Date latestDate = this.getLatestDateToSubmitRequest(requestDate);
-        Date earliestDate = this.getEarliestDateToSubmitRequest(requestDate);
-        if (today.getTime() <= latestDate.getTime() &&
-                today.getTime() >= earliestDate.getTime()) {
-            return true;
-        } else {
+        try {
+            Date today = new Date();
+            Date latestDate = this.getLatestDateToSubmitRequest(requestDate);
+            Date earliestDate = this.getEarliestDateToSubmitRequest(requestDate);
+            if (today.getTime() <= latestDate.getTime() &&
+                    today.getTime() >= earliestDate.getTime()) {
+                return true;
+            } else {
+                return false;
+            }
+        } catch (Exception e) {
             return false;
         }
     }
