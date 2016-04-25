@@ -14,27 +14,18 @@ import java.util.Date;
 @TypeAlias("DriverRequest")
 public class DriverRequest {
 
-//    @Id
-//    private long id;
     private String driverNum;
     private DriverRequestType requestType;
     private String requestDate;
     private String reason;
 
-/*
-    public DriverRequest(long id, String driverNum, DriverRequestType requestType,
-                         String requestDate, String reason) {
-        this.setId(id);
-        this.setDriverNum(driverNum);
-        this.setRequestType(requestType);
-        this.setRequestDate(requestDate);
-        this.setReason(reason);
+
+    public DriverRequest() {
+
     }
-*/
 
     public DriverRequest(String driverNum, DriverRequestType requestType,
                          String requestDate, String reason) {
-//        this.setId(0);
         this.setDriverNum(driverNum);
         this.setRequestType(requestType);
         this.setRequestDate(requestDate);
